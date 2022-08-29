@@ -13,4 +13,4 @@ function get_branch() {
 
 // debug, print which branch we're in currently.
 echo "<h1>Hello world!</h1>";
-echo "<p>I am branch <strong>".get_branch()."</strong></p>";
+echo "<p>I am branch <strong>".get_branch()."</strong>.</p>";

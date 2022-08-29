@@ -1,0 +1,45 @@
+server {
+	listen			80;
+	listen			[::]:80;
+	server_name		~^(?<branch>.+)\.localhost\.testmy\.cloud$;
+
+	# max HTTP post size, this need to be the largest file size uploaded to the
+	# admin control panel.
+	client_max_body_size 200M;
+
+	root		/var/www/project/$branch/app/public/;
+	index		index.php index.html;
+	charset		utf-8;
+
+	# vhost security
+	add_header X-Content-Type-Options "nosniff";
+	add_header X-Frame-Options "DENY";
+
+	# Represents the root of the domain
+	# https://localhost:8000/[index.php]
+	location / {
+		# Matches URLS `$_GET['_url']`
+		#try_files $uri $uri/ /index.php?_url=$uri&$args;
+	}
+
+	location ~ \.php$ {
+		root /var/www/project/$branch/app/public/;
+		#try_files $uri =404;
+
+		include snippets/fastcgi-php.conf;
+		fastcgi_pass unix:/run/php-fpm.sock;
+
+		include fastcgi_params;
+		fastcgi_split_path_info			^(.+\.php)(/.+)$;
+		fastcgi_param PATH_INFO			$fastcgi_path_info;
+		fastcgi_param PATH_TRANSLATED	$document_root$fastcgi_path_info;
+		fastcgi_param SCRIPT_FILENAME	$document_root$fastcgi_script_name;
+	}
+
+	location ~ /\.ht {
+		deny all;
+	}
+
+	error_page 404 /404.html;
+	error_page 500 /500.html;
+}

@@ -1,6 +1,6 @@
-# apache-with-git-branches
+# nginx-with-git-branches
 
-The `apache-with-git-branches` project is a template to allow developers working on a PHP website to work easily on multiple branches at the same time.
+The `nginx-with-git-branches` project is a template to allow developers working on a PHP website to work easily on multiple branches at the same time.
 
 ## Prerequisites
 
@@ -9,8 +9,7 @@ The `apache-with-git-branches` project is a template to allow developers working
 
 If you don't have a domain yet, or in the case of proof-of-concept projects never will, you can use `branch-name.localhost.testmy.cloud`... `ANYTHING.localhost.testmy.cloud` will resolve to localhost (yourself).
 
-NB: if you're using your own domain, you will need to update the domain in `etc/apache2/sites-enabled/000-default.conf` and `app/public/index.php`
-
+NB: if you're using your own domain, you will need to update the domain in `etc/nginx/sites-enabled/default.conf` and `app/public/index.php`
 
 ## HOWTO
 
@@ -22,14 +21,14 @@ NB: if you're using your own domain, you will need to update the domain in `etc/
 ## Deploy
 
 ```
-docker build -t apache-with-git-branches ./
+docker build -t nginx-with-git-branches ./
 
-docker run -it --rm -h test --name test -p 80:80 -p 443:443 -v C:/Users/me/github/apache-with-git-branches:/var/www/project apache-with-git-branches
+docker run -it --rm -h test --name test -p 80:80 -p 443:443 -v C:/Users/me/github/nginx-with-git-branches:/var/www/project nginx-with-git-branches
 ```
 
 If you wish to run the Docker container in the background use this run command:
 ```
-docker run -dit --rm -h test --name test -p 80:80 -p 443:443 -v c:/Users/me/Apps/apache-with-git-branches:/var/www/project apache-with-git-branches
+docker run -dit --rm -h test --name test -p 80:80 -p 443:443 -v c:/Users/me/Apps/nginx-with-git-branches:/var/www/project nginx-with-git-branches
 ```
 
 ... and to attach/debug/monitor run `docker exec -it test /bin/bash`.
